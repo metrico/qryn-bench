@@ -484,10 +484,10 @@ function align_timestamp_to_step(ts, step) {
  */
 function get_remote_write_url() {
     if (USERNAME !== '' || WRITE_TOKEN !== '') {
-        return `${SCHEME}://${USERNAME}:${WRITE_TOKEN}@${WRITE_HOSTNAME}/api/v1/push`;
+        return `${SCHEME}://${USERNAME}:${WRITE_TOKEN}@${WRITE_HOSTNAME}/api/v1/prom/remote/write`;
     }
 
-    return `${SCHEME}://${WRITE_HOSTNAME}/api/v1/push`;
+    return `${SCHEME}://${WRITE_HOSTNAME}/api/v1/prom/remote/write`;
 }
 
 /**
@@ -574,7 +574,7 @@ export function run_instant_query(name, config) {
     console.debug(name, " - query: ", query)
 
     describe(name, () => {
-        const res = query_client.post('/query', {
+        const res = query_client.post('/api/v1/query', {
             query: query,
             time: time,
         }, {
