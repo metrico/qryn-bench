@@ -7,10 +7,12 @@ jobs:
     name: Run k6 test
     runs-on: ubuntu-latest
     steps:
+      - run: docker run --name clickhouse -p 9000:9000 -p 8123:8123 -d clickhouse/clickhouse-server:latest
+      - run: docker run --name clickhouse -p 3100:3100 -d qxip/qryn:latest
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run k6 local test
         uses: grafana/k6-action@v0.3.0
         with:
-          filename: qryn-load-test.js
+          filename: qryn-loadtest.js
           flags: --vus 50 --duration 10s
