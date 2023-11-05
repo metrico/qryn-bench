@@ -16,6 +16,13 @@ Build k6 with k6-client-prometheus-remote support using xk6
 xk6 build --with github.com/grafana/xk6-client-prometheus-remote@latest
 ```
 
+Alternatively, download a prebuilt version of k6 with Prometheus support:
+```sh
+wget -O k6 https://github.com/grafana/xk6-client-prometheus-remote/releases/download/v0.3.1/k6_rw_v0.3.1_linux_amd64
+chmod +x k6
+```
+
+
 ## Run the test script
 
 The [load-testing-with-k6.js] script can be configured using the following environment variables:
