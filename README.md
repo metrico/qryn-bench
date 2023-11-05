@@ -49,7 +49,10 @@ The [load-testing-with-k6.js] script can be configured using the following envir
 For example, if qryn is running on `localhost:3100` you can run a small scale test with this command:
 
 ```sh
-k6 run load-testing-with-k6.js -e K6_WRITE_HOSTNAME="localhost:3100" -e K6_READ_HOSTNAME="localhost:3100" -e K6_DURATION_MIN="1"
+k6 run load-testing-with-k6.js \
+    -e K6_WRITE_HOSTNAME="localhost:3100" \
+    -e K6_READ_HOSTNAME="localhost:3100" \
+    -e K6_DURATION_MIN="1"
 ```
 
 Assuming qryn is scaled up appropriately and you have enough k6 workers capacity, you can load test qryn with 1 billion active series running this command:
