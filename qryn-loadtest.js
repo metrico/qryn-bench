@@ -503,7 +503,6 @@ function get_read_authentication_headers() {
     
     if (TENANT_ID !== '') {
         auth_headers.set('X-Scope-OrgID', TENANT_ID)
-
     }
     
     return auth_headers;
