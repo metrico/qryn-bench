@@ -527,7 +527,7 @@ export function run_range_query() {
     console.debug("range query - time_range:", time_range, "start:", start, "end:", end, "step:", step, "query:", query)
 
     describe(name, () => {
-        const res = query_client.post('/query_range', {
+        const res = query_client.post('/api/v1/query_range', {
             query: query,
             start: start,
             end: end,
