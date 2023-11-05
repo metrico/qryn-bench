@@ -4,15 +4,22 @@ on:
   
 jobs:
   build:
-    name: Run k6 test
+    name: Run k6 on qryn:latest
     runs-on: ubuntu-latest
     steps:
       - run: docker run --name clickhouse -p 9000:9000 -p 8123:8123 -d clickhouse/clickhouse-server:latest
-      - run: docker run --name clickhouse -p 3100:3100 -d qxip/qryn:latest
+      - run: docker run --name qryn -p 3100:3100 -e CLICKHOUSE_SERVER="clickhouse" -d qxip/qryn:latest
       - name: Checkout
         uses: actions/checkout@v2
       - name: Run k6 local test
         uses: grafana/k6-action@v0.3.0
         with:
           filename: qryn-loadtest.js
-          flags: --vus 50 --duration 10s
+          flags: --vus 50 --duration 30s
+        env:
+          K6_WRITE_HOSTNAME: "qryn:3100"
+          K6_READ_HOSTNAME: "qryn:3100"
+          K6_WRITE_REQUEST_RATE: 1
+          K6_WRITE_SERIES_PER_REQUEST: 100
+          K6_READ_REQUEST_RATE: 1
+          RAMP_UP_MIN: 0
