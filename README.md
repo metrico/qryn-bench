@@ -1,4 +1,4 @@
-# Load testing qryb with k6
+# Load testing qryn with k6
 
 [Grafana's k6](https://k6.io/) is an open source load testing tool.
 
