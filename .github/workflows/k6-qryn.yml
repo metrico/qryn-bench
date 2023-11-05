@@ -30,7 +30,7 @@ jobs:
           chmod +x k6_rw_v0.3.1_linux_amd64
           mv k6_rw_v0.3.1_linux_amd64 k6
       - name: Run k6 local test
-        run: ./k6 run qryn-loadtest.js 
+        run: ./k6 run --out csv=results.csv qryn-loadtest.js 
         env:
           K6_WRITE_HOSTNAME: "localhost:3100"
           K6_READ_HOSTNAME: "localhost:3100"
@@ -39,3 +39,7 @@ jobs:
           K6_READ_REQUEST_RATE: 1
           K6_DURATION_MIN: 1
           RAMP_UP_MIN: 0
+      - uses: actions/upload-artifact@v3
+        with:
+          name: results
+          path: results.csv
