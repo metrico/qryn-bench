@@ -111,7 +111,7 @@ get_read_authentication_headers().forEach((value, key) => {
 })
 
 const query_client = new Httpx({
-    baseURL: `${SCHEME}://${READ_HOSTNAME}/prometheus/api/v1`,
+    baseURL: `${SCHEME}://${READ_HOSTNAME}/api/v1`,
     headers: query_client_headers,
     timeout: 120e3 // 120s timeout.
 });
@@ -527,7 +527,7 @@ export function run_range_query() {
     console.debug("range query - time_range:", time_range, "start:", start, "end:", end, "step:", step, "query:", query)
 
     describe(name, () => {
-        const res = query_client.post('/api/v1/query_range', {
+        const res = query_client.post('/query_range', {
             query: query,
             start: start,
             end: end,
@@ -574,7 +574,7 @@ export function run_instant_query(name, config) {
     console.debug(name, " - query: ", query)
 
     describe(name, () => {
-        const res = query_client.post('/api/v1/query', {
+        const res = query_client.post('/query', {
             query: query,
             time: time,
         }, {
