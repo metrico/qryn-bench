@@ -1,4 +1,4 @@
-name: K6 Test
+name: K6 Test qryn:latest
 on:
   workflow_dispatch:
   
