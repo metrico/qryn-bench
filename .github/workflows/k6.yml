@@ -6,16 +6,28 @@ jobs:
   build:
     name: Run k6 on qryn:latest
     runs-on: ubuntu-latest
+    services:
+      clickhouse:
+        image: clickhouse/clickhouse-server:latest
+        ports:
+          - 8123:8123
+      qryn:
+        image: qxip/qryn:latest
+        ports:
+          - 3100:3100
+        env:
+          CLICKHOUSE_SERVER: clickhouse
+    
     steps:
-      - run: docker run --name clickhouse -p 9000:9000 -p 8123:8123 -d clickhouse/clickhouse-server:latest
-      - run: docker run --name qryn -p 3100:3100 -e CLICKHOUSE_SERVER="clickhouse" -d qxip/qryn:latest
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Run k6 local test
-        uses: grafana/k6-action@v0.3.0
+      - uses: actions/setup-go@v4
         with:
-          filename: qryn-loadtest.js
-          flags: --vus 50 --duration 30s
+          go-version: '1.20'
+      - run: go install go.k6.io/xk6/cmd/xk6@latest
+      - run: xk6 build --with github.com/grafana/xk6-client-prometheus-remote@latest
+      - name: Run k6 local test
+        run: k6 run --duration 10s qryn-loadtest.js 
         env:
           K6_WRITE_HOSTNAME: "qryn:3100"
           K6_READ_HOSTNAME: "qryn:3100"
