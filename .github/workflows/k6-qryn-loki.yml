@@ -53,4 +53,10 @@ jobs:
           html-file: "summary.html"
       - name: Summary Report
         run: |
+          echo "### qryn image" >> $GITHUB_STEP_SUMMARY
+          echo "qxip/qryn:${{ github.event.inputs.clickhouse_tag || 'latest' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "### clickhouse image" >> $GITHUB_STEP_SUMMARY
+          echo "clickhouse/clickhouse-server:${{ github.event.inputs.qryn_tag || 'latest' }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
           echo "${{ steps.html2markdown.outputs.markdown-content }}" >> $GITHUB_STEP_SUMMARY
