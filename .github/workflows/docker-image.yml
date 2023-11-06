@@ -1,0 +1,18 @@
+name: k6 Docker Builder
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Docker Build and push (server)
+      if: github.event_name != 'pull_request'
+      uses: docker/build-push-action@v3.0.0
+      with:
+        context: .
+        push: true
+        tags: |
+           ghcr.io/metrico/k6:latest
