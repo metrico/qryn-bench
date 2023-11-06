@@ -1,4 +1,4 @@
-<img src="https://user-images.githubusercontent.com/1423657/218816262-e0e8d7ad-44d0-4a7d-9497-0d383ed78b83.png" height=150 />
+<img src="https://github.com/metrico/qryn-bench/assets/1423657/48ebca55-d279-40ab-a5c6-d5fa66d7c585" height=80 />
 
 # k6 for qryn
 
