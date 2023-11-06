@@ -42,7 +42,7 @@ The [prometheus/qryn-loadtest.js] script can be configured using the following e
 For example, if qryn is running on `localhost:3100` you can run a small scale test with this command:
 
 ```sh
-k6 run prometheus/qryn-loadtest.js \
+./k6 run prometheus/qryn-loadtest.js \
     -e K6_WRITE_HOSTNAME="localhost:3100" \
     -e K6_READ_HOSTNAME="localhost:3100" \
     -e K6_DURATION_MIN="1"
@@ -51,7 +51,7 @@ k6 run prometheus/qryn-loadtest.js \
 Assuming qryn is scaled up appropriately and you have enough k6 workers capacity, you can load test qryn with 1 billion active series running this command:
 
 ```sh
-k6 run lprometheus/qryn-loadtest.js \
+./k6 run lprometheus/qryn-loadtest.js \
     -e K6_WRITE_HOSTNAME="qryn:3100" \
     -e K6_READ_HOSTNAME="qryn:3100" \
     -e K6_WRITE_REQUEST_RATE="50000" \
@@ -62,4 +62,17 @@ k6 run lprometheus/qryn-loadtest.js \
 
 ### Loki Test
 
-> T.B.D.
+The [loki/qryn-loki-loadtest.js] script can be configured using the following environment variables:
+
+| Environment variable   | Required | Default value | Description                                                                           |
+| ---------------------- | -------- | ------------- | ------------------------------------------------------------------------------------- |
+| `K6_LOKI_HOSTNAME`     | No       | `http://localhost:3100`| qryn hostname to connect to on the write path.                                       |
+| `K6_BYTES`             | No       | 1024 | Bytes used for each request.                                        |
+| `K6_VUS`               | No       | 10 | k6 VUS.                                        |
+| `K6_ITERACTIONS`       | No       | 10 | k6 Interactions.                                        |
+
+If qryn is running on `localhost:3100` you can run a small scale test with this command:
+
+```
+./k6 run loki/qryn-loki-loadtest.js
+```
