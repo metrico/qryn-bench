@@ -18,9 +18,9 @@ Build k6 with k6-client-prometheus-remote support using xk6
 xk6 build --with github.com/grafana/xk6-client-prometheus-remote@latest
 ```
 
-Alternatively, download a prebuilt version of k6 with Prometheus support:
+Alternatively, download a prebuilt version of k6 with Prometheus/Loki support:
 ```sh
-wget -O k6 https://github.com/grafana/xk6-client-prometheus-remote/releases/download/v0.3.1/k6_rw_v0.3.1_linux_amd64
+wget -O k6 https://github.com/metrico/qryn-bench/releases/download/latest/k6
 chmod +x k6
 ```
 
