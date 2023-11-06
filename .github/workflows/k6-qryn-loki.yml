@@ -38,10 +38,9 @@ jobs:
              summary.html
       - name: Convert HTML to Markdown
         id: html2markdown
-        if: always()
         uses: rknj/html2markdown@v0.1.0
         with:
-          html-file: "report.html"
+          html-file: "summary.html"
       - name: Summary Report
         run: |
           echo "${{ steps.html2markdown.outputs.markdown-file }}" >> $GITHUB_STEP_SUMMARY
