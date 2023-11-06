@@ -36,14 +36,12 @@ jobs:
           path: |
              results.csv
              summary.html
-             
-      - name: Generate HTML Preview
-        id: html_preview
-        uses: pavi2410/html-preview-action@v2
+      - name: Convert HTML to Markdown
+        id: html2markdown
+        if: always()
+        uses: rknj/html2markdown@v0.1.0
         with:
-          html_file: 'summary.html'
+          html-file: "report.html"
       - name: Summary Report
         run: |
-          echo "### Test Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "${{ format('[Test Summary Report]({0})', steps.html_preview.outputs.url) }}" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.html2markdown.outputs.markdown-file }}" >> $GITHUB_STEP_SUMMARY
