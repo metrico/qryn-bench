@@ -68,10 +68,10 @@ The [loki/qryn-loki-loadtest.js](loki/qryn-loki-loadtest.js) script can be confi
 
 | Environment variable   | Required | Default value | Description                                                                           |
 | ---------------------- | -------- | ------------- | ------------------------------------------------------------------------------------- |
-| `K6_LOKI_HOSTNAME`     | No       | `http://localhost:3100`| qryn hostname to connect to on the write path.                                       |
-| `K6_BYTES`             | No       | 1024 | Bytes used for each request.                                        |
-| `K6_VUS`               | No       | 10 | k6 VUS.                                        |
-| `K6_ITERACTIONS`       | No       | 10 | k6 Interactions.                                        |
+| `K6_LOKI_HOSTNAME`     | No       | `http://localhost:3100`| Hostname for the qryn instance or other logql API endpoint.                  |
+| `K6_BYTES`             | No       | 1024 | Size in Bytes for each request.                               |
+| `K6_VUS`               | No       | 10 | Number of users to simulate                                     |
+| `K6_ITERACTIONS`       | No       | 10 | Number of user interactions to simulate                         |
 
 If qryn is running on `localhost:3100` you can run a small scale test with this command:
 
