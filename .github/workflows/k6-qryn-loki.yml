@@ -36,3 +36,14 @@ jobs:
           path: |
              results.csv
              summary.html
+             
+      - name: Generate HTML Preview
+        id: html_preview
+        uses: pavi2410/html-preview-action@v2
+        with:
+          html_file: 'summary.html'
+      - name: Summary Report
+        run: |
+          echo "### Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "${{ format('[Test Summary Report]({0})', steps.html_preview.outputs.url) }}" >> $GITHUB_STEP_SUMMARY
