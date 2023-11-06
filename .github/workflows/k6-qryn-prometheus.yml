@@ -44,3 +44,11 @@ jobs:
           path: |
              results.csv
              summary.html
+      - name: Convert HTML to Markdown
+        id: html2markdown
+        uses: rknj/html2markdown@v0.1.0
+        with:
+          html-file: "summary.html"
+      - name: Summary Report
+        run: |
+          echo "${{ steps.html2markdown.outputs.markdown-content }}" >> $GITHUB_STEP_SUMMARY
