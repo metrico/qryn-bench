@@ -4,10 +4,10 @@ on:
     inputs:
       qryn_tag:
         description: 'Build/Tag for qryn (latest)'
-        required: true
+        required: false
       clickhouse_tag:
         description: 'BuildTag for ClickHouse (latest)'
-        required: true
+        required: false
   
 jobs:
   build:
