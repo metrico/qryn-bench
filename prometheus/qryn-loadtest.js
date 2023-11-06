@@ -6,6 +6,7 @@ import remote from 'k6/x/remotewrite';
 import { describe, expect } from 'https://jslib.k6.io/k6chaijs/4.3.4.1/index.js';
 import { randomIntBetween } from "https://jslib.k6.io/k6-utils/1.1.0/index.js";
 import { Httpx } from 'https://jslib.k6.io/httpx/0.0.6/index.js';
+import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 
 /**
  * Mimir hostname to connect to on the write path.
@@ -588,4 +589,10 @@ export function run_instant_query(name, config) {
         expect(res.json('status'), "status field").to.equal("success");
         expect(res.json('data.resultType'), "data.resultType field").to.equal("vector");
     });
+}
+
+export function handleSummary(data) {
+  return {
+    "summary.html": htmlReport(data),
+  };
 }
