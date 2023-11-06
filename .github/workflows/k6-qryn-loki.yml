@@ -43,4 +43,4 @@ jobs:
           html-file: "summary.html"
       - name: Summary Report
         run: |
-          cat "${{ steps.html2markdown.outputs.markdown-file }}" >> $GITHUB_STEP_SUMMARY
+          echo "${{ steps.html2markdown.outputs.markdown-content }}" >> $GITHUB_STEP_SUMMARY
