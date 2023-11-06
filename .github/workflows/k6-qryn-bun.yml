@@ -30,7 +30,7 @@ jobs:
           chmod +x k6_rw_v0.3.1_linux_amd64
           mv k6_rw_v0.3.1_linux_amd64 k6
       - name: Run k6 local test
-        run: ./k6 run --out csv=results.csv qryn-loadtest.js 
+        run: ./k6 run --out csv=results.csv prometheus/qryn-loadtest.js 
         env:
           K6_WRITE_HOSTNAME: "localhost:3100"
           K6_READ_HOSTNAME: "localhost:3100"
