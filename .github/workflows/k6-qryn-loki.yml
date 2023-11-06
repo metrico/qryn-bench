@@ -18,11 +18,11 @@ jobs:
       CLICKHOUSE_VERSION: "qxip/qryn:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
     services:
       clickhouse:
-        image: "${{ env.CLICKHOUSE_VERSION }}"
+        image: ${{ env.CLICKHOUSE_VERSION }}
         ports:
           - 8123:8123
       qryn:
-        image: "${{ env.QRYN_VERSION }}"
+        image: ${{ env.QRYN_VERSION }}
         ports:
           - 3100:3100
         env:
