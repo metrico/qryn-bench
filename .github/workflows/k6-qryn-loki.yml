@@ -14,15 +14,15 @@ jobs:
     name: Run k6 on qryn:latest
     runs-on: ubuntu-latest
     env:
-      QRYN_VERSION: ${{ github.event.inputs.qryn_tag || 'latest' }}
-      CLICKHOUSE_VERSION: ${{ github.event.inputs.clickhouse_tag ||  'latest' }}
+      QRYN_VERSION: "clickhouse/clickhouse-server:${{ github.event.inputs.qryn_tag || 'latest' }}"
+      CLICKHOUSE_VERSION: "qxip/qryn:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
     services:
       clickhouse:
-        image: "clickhouse/clickhouse-server:$CLICKHOUSE_VERSION"
+        image: $CLICKHOUSE_VERSION
         ports:
           - 8123:8123
       qryn:
-        image: "qxip/qryn:$QRYN_VERSION"
+        image: $QRYN_VERSION
         ports:
           - 3100:3100
         env:
