@@ -35,5 +35,12 @@ jobs:
     - name: Upload Custom k6
       uses: actions/upload-artifact@v3
       with:
-          path: ${{ steps.extract.outputs.destination }}
+          path: ${{ steps.extract.outputs.destination }}/k6
           name: latest
+    - name: Upload k6 to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ steps.extract.outputs.destination }}/k6
+        asset_name: k6
+        tag: latest
