@@ -1,4 +1,4 @@
-name: K6 Test Prometheus qryn:bun
+name: K6 Prometheus qryn:bun
 on:
   workflow_dispatch:
   
