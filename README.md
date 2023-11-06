@@ -4,7 +4,7 @@
 
 Test and Bencharmking setup for [qryn](https://qryn.dev) using [k6](https://k6.io/)
 
-## Pre-requisites
+### Pre-requisites
 
 Download the latest `k6` binary with built-in Prometheus and Loki support:
 
@@ -18,7 +18,7 @@ chmod +x k6
 
 ### Prometheus Test
 
-The [prometheus/qryn-loadtest.js] script can be configured using the following environment variables:
+The [prometheus/qryn-loadtest.js](prometheus/qryn-loadtest.js) script can be configured using the following environment variables:
 
 | Environment variable          | Required | Default value | Description                                                                           |
 | ----------------------------- | -------- | ------------- | ------------------------------------------------------------------------------------- |
@@ -60,9 +60,11 @@ Assuming qryn is scaled up appropriately and you have enough k6 workers capacity
     -e RAMP_UP_MIN="2"
 ```
 
+<br>
+
 ### Loki Test
 
-The [loki/qryn-loki-loadtest.js] script can be configured using the following environment variables:
+The [loki/qryn-loki-loadtest.js](loki/qryn-loki-loadtest.js) script can be configured using the following environment variables:
 
 | Environment variable   | Required | Default value | Description                                                                           |
 | ---------------------- | -------- | ------------- | ------------------------------------------------------------------------------------- |
