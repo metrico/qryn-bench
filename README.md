@@ -1,33 +1,24 @@
 <img src="https://user-images.githubusercontent.com/1423657/218816262-e0e8d7ad-44d0-4a7d-9497-0d383ed78b83.png" height=150 />
 
-# Load testing qryn with k6
+# k6 for qryn
 
-[Grafana's k6](https://k6.io/) is an open source load testing tool.
+Test and Bencharmking setup for [qryn](https://qryn.dev) using [k6](https://k6.io/)
 
 ## Pre-requisites
 
-Install xk6, used for building k6 with additional modules
+Download the latest `k6` binary with built-in Prometheus and Loki support:
 
-```sh
-go install go.k6.io/xk6/cmd/xk6@latest
-```
-
-Build k6 with k6-client-prometheus-remote support using xk6
-
-```sh
-xk6 build --with github.com/grafana/xk6-client-prometheus-remote@latest
-```
-
-Alternatively, download a prebuilt version of k6 with Prometheus/Loki support:
 ```sh
 wget -O k6 https://github.com/metrico/qryn-bench/releases/download/latest/k6
 chmod +x k6
 ```
 
 
-## Run the test script
+## Test Scripts
 
-The [load-testing-with-k6.js] script can be configured using the following environment variables:
+### Prometheus Test
+
+The [prometheus/qryn-loadtest.js] script can be configured using the following environment variables:
 
 | Environment variable          | Required | Default value | Description                                                                           |
 | ----------------------------- | -------- | ------------- | ------------------------------------------------------------------------------------- |
@@ -51,7 +42,7 @@ The [load-testing-with-k6.js] script can be configured using the following envir
 For example, if qryn is running on `localhost:3100` you can run a small scale test with this command:
 
 ```sh
-k6 run load-testing-with-k6.js \
+k6 run prometheus/qryn-loadtest.js \
     -e K6_WRITE_HOSTNAME="localhost:3100" \
     -e K6_READ_HOSTNAME="localhost:3100" \
     -e K6_DURATION_MIN="1"
@@ -60,7 +51,7 @@ k6 run load-testing-with-k6.js \
 Assuming qryn is scaled up appropriately and you have enough k6 workers capacity, you can load test qryn with 1 billion active series running this command:
 
 ```sh
-k6 run load-testing-with-k6.js \
+k6 run lprometheus/qryn-loadtest.js \
     -e K6_WRITE_HOSTNAME="qryn:3100" \
     -e K6_READ_HOSTNAME="qryn:3100" \
     -e K6_WRITE_REQUEST_RATE="50000" \
@@ -68,3 +59,7 @@ k6 run load-testing-with-k6.js \
     -e K6_READ_REQUEST_RATE="200" \
     -e RAMP_UP_MIN="2"
 ```
+
+### Loki Test
+
+> T.B.D.
