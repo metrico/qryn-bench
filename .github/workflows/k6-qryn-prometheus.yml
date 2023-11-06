@@ -1,18 +1,28 @@
 name: K6 Prometheus qryn:latest
 on:
   workflow_dispatch:
+    inputs:
+      qryn_tag:
+        description: 'Build/Tag for qryn (latest)'
+        required: true
+      clickhouse_tag:
+        description: 'BuildTag for ClickHouse (latest)'
+        required: true
   
 jobs:
   build:
     name: Run k6 on qryn:latest
     runs-on: ubuntu-latest
+    env:
+      QRYN_VERSION: ${{ github.event.inputs.qryn_tag || 'latest' }}
+      CLICKHOUSE_VERSION: ${{ github.event.inputs.clickhouse_tag ||  'latest' }}
     services:
       clickhouse:
-        image: clickhouse/clickhouse-server:latest
+        image: "clickhouse/clickhouse-server:$CLICKHOUSE_VERSION"
         ports:
           - 8123:8123
       qryn:
-        image: qxip/qryn:latest
+        image: "qxip/qryn:$QRYN_VERSION"
         ports:
           - 3100:3100
         env:
