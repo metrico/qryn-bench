@@ -6,13 +6,17 @@ import loki from 'k6/x/loki';
  * Path is automatically appended by the client
  * @constant {string}
  */
-const BASE_URL = `http://localhost:3100`;
+const BASE_URL = __ENV.K6_LOKI_HOSTNAME || `http://localhost:3100`;
+const LOKI_BYTES = __ENV.K6_BYTES || 1024;
+const LOKI_VUS = __ENV.K6_VUS || 10;
+const LOKI_ITERACTIONS = __ENV.K6_ITERACTIONS || 10;
+
 
 /**
  * Helper constant for byte values
  * @constant {number}
  */
-const KB = 1024;
+const KB = LOKI_BYTES;
 
 /**
  * Helper constant for byte values
@@ -30,8 +34,8 @@ const client = new loki.Client(conf);
  * Define test scenario
  */
 export const options = {
-  vus: 10,
-  iterations: 10,
+  vus: LOKI_VUS,
+  iterations: LOKI_ITERACTIONS,
 };
 
 /**
