@@ -8,7 +8,7 @@ on:
       clickhouse_tag:
         description: 'BuildTag for ClickHouse (latest)'
         required: false
-  
+
 jobs:
   build:
     name: Run k6 on qryn:latest
@@ -18,11 +18,11 @@ jobs:
       CLICKHOUSE_VERSION: "qxip/qryn:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
     services:
       clickhouse:
-        image: ${{ env.CLICKHOUSE_VERSION }}
+        image: "clickhouse/clickhouse-server:${{ github.event.inputs.qryn_tag || 'latest' }}"
         ports:
           - 8123:8123
       qryn:
-        image: ${{ env.QRYN_VERSION }}
+        image:  "qxip/qryn:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
         ports:
           - 3100:3100
         env:
