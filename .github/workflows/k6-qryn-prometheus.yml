@@ -1,4 +1,4 @@
-name: K6 Test Prometheus qryn:latest
+name: K6 Prometheus qryn:latest
 on:
   workflow_dispatch:
   
