@@ -26,9 +26,8 @@ jobs:
           go-version: '1.20'
       - name: Download k6 for Prometheus
         run: |
-          wget https://github.com/grafana/xk6-client-prometheus-remote/releases/download/v0.3.1/k6_rw_v0.3.1_linux_amd64
-          chmod +x k6_rw_v0.3.1_linux_amd64
-          mv k6_rw_v0.3.1_linux_amd64 k6
+          wget https://github.com/metrico/qryn-bench/releases/download/latest/k6
+          chmod +x k6
       - name: Run k6 local test
         run: ./k6 run --out csv=results.csv prometheus/qryn-loadtest.js 
         env:
