@@ -78,6 +78,7 @@ export function handleSummary(data) {
   return {
     "summary.html": htmlReport(data),
     "summary.md": markdownReport(data),
+    "summary.txt": textSummary(data, { indent: ' ', enableColors: false }),
     "stdout": textSummary(data, { indent: ' ', enableColors: true }),
   };
 }
