@@ -7,7 +7,7 @@ import { describe, expect } from 'https://jslib.k6.io/k6chaijs/4.3.4.1/index.js'
 import { randomIntBetween } from "https://jslib.k6.io/k6-utils/1.1.0/index.js";
 import { Httpx } from 'https://jslib.k6.io/httpx/0.0.6/index.js';
 
-import { htmlReport } from "https://raw.githubusercontent.com/metrico/k6-reporter/main/dist/bundle.js";
+import { htmlReport, markdownReport } from "https://raw.githubusercontent.com/metrico/k6-reporter/main/dist/bundle.js";
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 
 /**
