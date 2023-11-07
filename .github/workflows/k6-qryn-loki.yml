@@ -58,4 +58,6 @@ jobs:
           echo "### clickhouse image" >> $GITHUB_STEP_SUMMARY
           echo "clickhouse/clickhouse-server:${{ github.event.inputs.clickhouse_tag || 'latest' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          cat summary.md >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
+          cat summary.txt >> $GITHUB_STEP_SUMMARY
+          echo "```" >> $GITHUB_STEP_SUMMARY
