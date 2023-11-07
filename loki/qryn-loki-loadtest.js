@@ -75,5 +75,6 @@ function randomChoice(items) {
 export function handleSummary(data) {
   return {
     "summary.html": htmlReport(data),
+    "stdout": textSummary(data, { indent: ' ', enableColors: true }),
   };
 }
