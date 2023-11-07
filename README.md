@@ -76,5 +76,6 @@ The [loki/qryn-loki-loadtest.js](loki/qryn-loki-loadtest.js) script can be confi
 If qryn is running on `localhost:3100` you can run a small scale test with this command:
 
 ```
-./k6 run loki/qryn-loki-loadtest.js
+./k6 run loki/qryn-loki-loadtest.js \
+    -e K6_LOKI_HOSTNAME="qryn:3100"
 ```
