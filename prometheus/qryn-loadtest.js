@@ -594,5 +594,6 @@ export function run_instant_query(name, config) {
 export function handleSummary(data) {
   return {
     "summary.html": htmlReport(data),
+    "stdout": textSummary(data, { indent: ' ', enableColors: true }),
   };
 }
