@@ -40,6 +40,9 @@ jobs:
           chmod +x k6
       - name: Run k6 loki test
         run: ./k6 run --out csv=results.csv loki/qryn-loki-loadtest.js
+        env:
+          K6_VUS: 1
+          K6_ITERACTIONS: 1000
       - uses: actions/upload-artifact@v3
         with:
           name: results
