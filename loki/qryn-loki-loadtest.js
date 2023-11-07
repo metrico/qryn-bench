@@ -1,7 +1,7 @@
 import {sleep, check} from 'k6';
 import loki from 'k6/x/loki';
 
-import { htmlReport } from "https://raw.githubusercontent.com/metrico/k6-reporter/main/dist/bundle.js";
+import { htmlReport, markdownReport } from "https://raw.githubusercontent.com/metrico/k6-reporter/main/dist/bundle.js";
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 
 /**
