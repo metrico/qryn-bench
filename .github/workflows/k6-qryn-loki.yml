@@ -1,4 +1,4 @@
-name: K6 Loki Test qryn:latest
+name: K6 Loki qxip/qryn
 on:
   workflow_dispatch:
     inputs:
@@ -49,11 +49,7 @@ jobs:
           path: |
              results.csv
              summary.html
-      - name: Convert HTML to Markdown
-        id: html2markdown
-        uses: rknj/html2markdown@v0.1.0
-        with:
-          html-file: "summary.html"
+             summary.md
       - name: Summary Report
         run: |
           echo "### qryn image" >> $GITHUB_STEP_SUMMARY
@@ -62,4 +58,4 @@ jobs:
           echo "### clickhouse image" >> $GITHUB_STEP_SUMMARY
           echo "clickhouse/clickhouse-server:${{ github.event.inputs.clickhouse_tag || 'latest' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "${{ steps.html2markdown.outputs.markdown-content }}" >> $GITHUB_STEP_SUMMARY
+          cat summary.md >> $GITHUB_STEP_SUMMARY
