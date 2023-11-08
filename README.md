@@ -180,16 +180,13 @@ If qryn is running on `localhost:3100` you can run a small scale Tempo test with
 
 ```bash
 ./k6-tracing run tempo/qryn-tempo-template.js \
-    -e K6_TEMPO_ENDPOINT="localhost:3100"
+    -e K6_TEMPO_ENDPOINT="http://localhost:3100"
 ```
 ```
  █ tempo_query
 
    ✓ expected request status to equal 200
    ✓ has valid json body
-   ✓ expected count results 2 to be above 0
-   ✓ expected count results 5 to be above 0
-   ✓ expected count results 8 to be above 0
    ✓ expected count results 10 to be above 0
 
  █ teardown
