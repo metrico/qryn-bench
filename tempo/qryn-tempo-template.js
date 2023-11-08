@@ -1,13 +1,18 @@
-import {sleep} from 'k6';
+import {sleep, check} from 'k6';
 import tracing from 'k6/x/tracing';
 import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
 import { htmlReport, markdownReport } from "https://raw.githubusercontent.com/metrico/k6-reporter/main/dist/bundle.js";
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 
+import { describe, expect } from 'https://jslib.k6.io/k6chaijs/4.3.4.1/index.js';
+import { URL } from 'https://jslib.k6.io/url/1.0.0/index.js';
+import http from 'k6/http';
+
 export let options = {
     vus: __ENV.K6_VUS || 1,
     duration: __ENV.K6_DURATION_MINUTES ? __ENV.K6_DURATION_MINUTES + "m" : "1m",
+    iterations: __ENV.K6_ITERATIONS || 10,
 };
 
 const endpoint = __ENV.K6_TEMPO_ENDPOINT || "http://localhost:3100"
@@ -66,9 +71,27 @@ const traceTemplates = [
 export default function () {
     const templateIndex = randomIntBetween(0, traceTemplates.length-1)
     const gen = new tracing.TemplatedGenerator(traceTemplates[templateIndex])
-    client.push(gen.traces())
+
+    let t = gen.traces()
+    let res = client.push(t)
 
     sleep(randomIntBetween(1, 5));
+
+    const end = parseInt(Date.now() / 1000);
+    const start = end - 300;
+
+    describe('tempo_query', () => {
+    	const url = new URL(endpoint+"/api/search");
+      	url.searchParams.append('limit', 10);
+      	url.searchParams.append('start', start);
+      	url.searchParams.append('end', end);
+        url.searchParams.append('tags', 'service.name="shop-backend"');
+      	const res = http.get(url.toString());
+            
+        expect(res.status, "request status").to.equal(200);
+        expect(res).to.have.validJsonBody();
+        expect(res.json().traces.length, "count results "+res.json().traces.length).to.be.greaterThan(0);
+    });
 }
 
 export function teardown() {
