@@ -1,4 +1,4 @@
-name: k6 Tracing Docker Builder
+name: k6 Docker Tracing Builder
 
 on:
   workflow_dispatch:
