@@ -66,3 +66,5 @@ jobs:
           echo "```" >> $GITHUB_STEP_SUMMARY
           cat summary.txt >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "#### https://qryn.cloud" >> $GITHUB_STEP_SUMMARY
+
