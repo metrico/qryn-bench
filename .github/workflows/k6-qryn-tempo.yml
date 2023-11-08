@@ -39,12 +39,12 @@ jobs:
           wget https://github.com/metrico/qryn-bench/releases/download/latest/k6-tracing -O k6
           chmod +x k6
       - name: Run k6 loki test
-        run: ./k6 run --out csv=results.csv tempo/qryn-tempo-loadtest.js
+        run: ./k6 run --out csv=results.csv tempo/qryn-tempo-template.js
         env:
           K6_TEMPO_ENDPOINT: "http://localhost:3100"
           K6_VUS: 1
           K6_DURATION_MINUTES: 1
-          K6_INTERVAL: 15
+          K6_ITERATIONS: 10
       - name: Strip Text report
         run: |
           sed -i 's/[^[:print:]]/*/' summary.txt
