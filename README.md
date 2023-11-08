@@ -16,7 +16,10 @@ chmod +x k6
 
 ## Test Scripts
 
-### Prometheus Test
+This repository provides scripts to test qryn's own `Loki`, `Prometheus` and `Tempo` APIs<br>
+
+
+### Prometheus
 
 The [prometheus/qryn-loadtest.js](prometheus/qryn-loadtest.js) script can be configured using the following environment variables:
 
@@ -39,7 +42,7 @@ The [prometheus/qryn-loadtest.js](prometheus/qryn-loadtest.js) script can be con
 | `K6_HA_CLUSTERS`              |          | 1             | Number of HA clusters to simulate.                                                    |
 | `K6_TENANT_ID`                |          | ''            | Tenant ID used for load test to read metrics from and write metrics to.               |
 
-For example, if qryn is running on `localhost:3100` you can run a small scale test with this command:
+For example, if qryn is running on `localhost:3100` you can run a small scale Prometheus test with this command:
 
 ```sh
 ./k6 run prometheus/qryn-loadtest.js \
@@ -62,7 +65,7 @@ Assuming qryn is scaled up appropriately and you have enough k6 workers capacity
 
 <br>
 
-### Loki Test
+### Loki 
 
 The [loki/qryn-loki-loadtest.js](loki/qryn-loki-loadtest.js) script can be configured using the following environment variables:
 
@@ -73,9 +76,28 @@ The [loki/qryn-loki-loadtest.js](loki/qryn-loki-loadtest.js) script can be confi
 | `K6_VUS`               | No       | 10 | Number of users to simulate                                     |
 | `K6_ITERACTIONS`       | No       | 10 | Number of user interactions to simulate                         |
 
-If qryn is running on `localhost:3100` you can run a small scale test with this command:
+If qryn is running on `localhost:3100` you can run a small Loki scale test with this command:
 
 ```
 ./k6 run loki/qryn-loki-loadtest.js \
     -e K6_LOKI_HOSTNAME="qryn:3100"
 ```
+
+### Tempo 
+
+The [tempo/qryn-tempo-template.js](tempo/qryn-tempo-template.js) script can be configured using the following environment variables:
+
+| Environment variable   | Required | Default value | Description                                                                           |
+| ---------------------- | -------- | ------------- | ------------------------------------------------------------------------------------- |
+| `K6_TEMPO_HOSTNAME`    | No       | `http://localhost:3100`| Hostname for the qryn instance or other Tempo API endpoint.                  |
+| `K6_DURATION_MINUTES`  | No       | 1 | Test duration in minutes                              |
+| `K6_VUS`               | No       | 10 | Number of users to simulate                                     |
+| `K6_ITERACTIONS`       | No       | 10 | Number of user interactions to simulate                         |
+
+If qryn is running on `localhost:3100` you can run a small scale Tempo test with this command:
+
+```
+./k6 run loki/qryn-loki-loadtest.js \
+    -e K6_LOKI_HOSTNAME="qryn:3100"
+```
+
