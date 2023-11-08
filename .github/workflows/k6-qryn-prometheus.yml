@@ -59,6 +59,7 @@ jobs:
              results.csv
              summary.html
              summary.md
+             summary.txt
       - name: Summary Report
         run: |
           echo "### qryn image" >> $GITHUB_STEP_SUMMARY
@@ -70,3 +71,5 @@ jobs:
           echo "```" >> $GITHUB_STEP_SUMMARY
           cat summary.txt >> $GITHUB_STEP_SUMMARY
           echo "```" >> $GITHUB_STEP_SUMMARY
+          echo "#### https://qryn.cloud" >> $GITHUB_STEP_SUMMARY
+
