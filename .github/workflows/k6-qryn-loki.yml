@@ -43,6 +43,10 @@ jobs:
         env:
           K6_VUS: 10
           K6_ITERACTIONS: 100
+      - name: Strip Text report
+        run: |
+          sed -i 's/[^[:print:]]/*/' summary.txt
+          sed -i 's/[\d128-\d255]//g' summary.txt
       - uses: actions/upload-artifact@v3
         with:
           name: results
