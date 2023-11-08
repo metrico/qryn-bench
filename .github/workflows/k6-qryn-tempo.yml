@@ -41,7 +41,7 @@ jobs:
       - name: Run k6 loki test
         run: ./k6 run --out csv=results.csv tempo/qryn-tempo-loadtest.js
         env:
-          K6_TEMPO_ENDPOINT: "localhost:3100"
+          K6_TEMPO_ENDPOINT: "http://localhost:3100"
           K6_VUS: 1
           K6_DURATION_MINUTES: 1
           K6_INTERVAL: 15
