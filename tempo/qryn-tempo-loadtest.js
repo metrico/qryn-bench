@@ -13,7 +13,7 @@ export let options = {
 const endpoint = __ENV.K6_TEMPO_ENDPOINT || "localhost:3100"
 const client = new tracing.Client({
     endpoint,
-    exporter: tracing.EXPORTER_OTLP,
+    exporter: tracing.EXPORTER_OTLP_HTTP,
     insecure: true,
 });
 
