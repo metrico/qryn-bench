@@ -2,12 +2,15 @@ import { sleep } from 'k6';
 import tracing from 'k6/x/tracing';
 import { randomIntBetween } from 'https://jslib.k6.io/k6-utils/1.2.0/index.js';
 
+import { htmlReport, markdownReport } from "https://raw.githubusercontent.com/metrico/k6-reporter/main/dist/bundle.js";
+import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
+
 export let options = {
-    vus: 1,
-    duration: "1m",
+    vus: __ENV.K6_VUS || 1,
+    duration: __ENV.K6_DURATION_MINUTES ? __ENV.K6_DURATION_MINUTES + "m" : "1m",
 };
 
-const endpoint = __ENV.ENDPOINT || "localhost:3100"
+const endpoint = __ENV.K6_TEMPO_ENDPOINT || "localhost:3100"
 const client = new tracing.Client({
     endpoint,
     exporter: tracing.EXPORTER_OTLP,
@@ -40,9 +43,17 @@ export default function () {
     client.push(traces);
 
     console.log(`Pushed ${pushSizeSpans} spans from ${pushSizeTraces} different traces. Here is a random traceID: ${t[Math.floor(Math.random() * t.length)].id}`);
-    sleep(15);
+    sleep(__ENV.K6_INTERVAL || 15);
 }
 
+export function handleSummary(data) {
+  return {
+    "summary.html": htmlReport(data),
+    "summary.md": markdownReport(data),
+    "summary.txt": textSummary(data, { indent: ' ', enableColors: false }),
+    "stdout": textSummary(data, { indent: ' ', enableColors: true }),
+  };
+}
 export function teardown() {
     client.shutdown();
 }
