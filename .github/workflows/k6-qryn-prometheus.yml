@@ -48,6 +48,10 @@ jobs:
           K6_READ_REQUEST_RATE: 1
           K6_DURATION_MIN: 1
           RAMP_UP_MIN: 0
+      - name: Strip Text report
+        run: |
+          sed -i 's/[^[:print:]]/*/' summary.txt
+          sed -i 's/[\d128-\d255]//g' summary.txt
       - uses: actions/upload-artifact@v3
         with:
           name: results
