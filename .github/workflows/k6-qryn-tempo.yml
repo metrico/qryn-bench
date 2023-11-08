@@ -1,4 +1,4 @@
-name: K6 Loki qxip/qryn
+name: K6 Tempo qxip/qryn
 on:
   workflow_dispatch:
     inputs:
