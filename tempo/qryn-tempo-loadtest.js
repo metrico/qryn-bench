@@ -42,7 +42,7 @@ export default function () {
     let traces = gen.traces()
     client.push(traces);
 
-    console.log(`Pushed ${pushSizeSpans} spans from ${pushSizeTraces} different traces. Here is a random trace: ${t[Math.floor(Math.random() * t.length)]}`);
+    console.log(`Pushed ${pushSizeSpans} spans from ${pushSizeTraces} different traces. Here is a random trace: ${JSON.stringify(t[Math.floor(Math.random() * t.length)])}`);
     sleep(__ENV.K6_INTERVAL || 15);
 }
 
