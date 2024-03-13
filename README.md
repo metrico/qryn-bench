@@ -129,7 +129,7 @@ If qryn is running on `localhost:3100` you can run a small Loki scale test with 
 
 ```bash
 ./k6 run loki/qryn-loki-loadtest.js \
-    -e K6_LOKI_HOSTNAME="localhost:3100"
+    -e K6_LOKI_HOSTNAME="http://localhost:3100"
 ```
 ```
 ✓ successful write
