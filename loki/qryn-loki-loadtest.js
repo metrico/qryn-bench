@@ -10,6 +10,7 @@ import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
  * @constant {string}
  */
 const BASE_URL = __ENV.K6_LOKI_HOSTNAME || `http://localhost:3100`;
+const QUERY_URL = __ENV.K6_LOKI_QUERY_HOSTNAME || __ENV.K6_LOKI_HOSTNAME || `http://localhost:3100`;
 const LOKI_BYTES = __ENV.K6_BYTES || 1024;
 const LOKI_VUS = __ENV.K6_VUS || 10;
 const LOKI_ITERACTIONS = __ENV.K6_ITERACTIONS || 10;
@@ -33,6 +34,9 @@ const MB = KB * KB;
 const conf = new loki.Config(BASE_URL);
 const client = new loki.Client(conf);
 
+const query_conf = new loki.Config(QUERY_URL);
+const query_client = new loki.Client(conf);
+
 /**
  * Define test scenario
  */
@@ -54,12 +58,12 @@ export default () => {
   let format = randomChoice(conf.labels["format"]);
 
   // Execute instant query with limit 1
-  res = client.instantQuery(`count_over_time({format="${format}"}[1m])`, 1)
+  res = query_client.instantQuery(`count_over_time({format="${format}"}[1m])`, 1)
   // Check for successful read
   check(res, { 'successful instant query': (res) => res.status == 200 });
 
   // Execute range query over last 5m and limit 1000
-  res = client.rangeQuery(`{format="${format}"}`, "5m", 1000)
+  res = query_client.rangeQuery(`{format="${format}"}`, "5m", 1000)
   // Check for successful read
   check(res, { 'successful range query': (res) => res.status == 200 });
 
