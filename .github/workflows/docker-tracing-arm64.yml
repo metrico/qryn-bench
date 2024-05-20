@@ -28,11 +28,11 @@ jobs:
         context: .
         push: true
         tags: |
-           ghcr.io/metrico/k6:tracing
+           ghcr.io/metrico/k6:tracing-arm64
     - uses: shrink/actions-docker-extract@v3
       id: extract
       with:
-          image: ghcr.io/metrico/k6:tracing
+          image: ghcr.io/metrico/k6:tracing-arm64
           path: /k6-tracing
     - name: Rename Binary
       run: mv ${{ steps.extract.outputs.destination }}/k6-tracing ${{ steps.extract.outputs.destination }}/k6-tracing-arm64
