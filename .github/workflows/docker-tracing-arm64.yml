@@ -1,0 +1,50 @@
+name: k6 Docker Tracing Builder ARM64
+
+on:
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  build:
+    runs-on: [ARM64]
+    steps:
+    - uses: actions/checkout@v4
+      with:
+        repository: grafana/xk6-client-tracing
+    - name: Log in to the Container registry
+      if: github.event_name != 'pull_request'
+      uses: docker/login-action@v2.0.0
+      with:
+        registry: ${{ env.REGISTRY }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build and push container image
+      if: github.event_name != 'pull_request'
+      uses: docker/build-push-action@v3.0.0
+      with:
+        context: .
+        push: true
+        tags: |
+           ghcr.io/metrico/k6:tracing
+    - uses: shrink/actions-docker-extract@v3
+      id: extract
+      with:
+          image: ghcr.io/metrico/k6:tracing
+          path: /k6-tracing
+    - name: Rename Binary
+      run: mv ${{ steps.extract.outputs.destination }}/k6-tracing ${{ steps.extract.outputs.destination }}/k6-tracing-arm64
+    - name: Upload Custom k6
+      uses: actions/upload-artifact@v3
+      with:
+          path: ${{ steps.extract.outputs.destination }}/k6-tracing-arm64
+          name: latest
+    - name: Upload k6 to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.GITHUB_TOKEN }}
+        file: ${{ steps.extract.outputs.destination }}/k6-tracing-arm64
+        asset_name: k6-tracing-arm64
+        tag: latest
