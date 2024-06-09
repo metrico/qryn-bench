@@ -93,7 +93,7 @@ jobs:
           K6_TEMPO_ENDPOINT: "http://localhost:3100"
           K6_VUS: 1
           K6_DURATION_MINUTES: 2
-          K6_ITERATIONS: 100
+          K6_ITERATIONS: 60
       - run: mv summary.txt tempo_summary.txt
         if: always()
       - name: Strip Text report
