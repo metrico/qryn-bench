@@ -118,8 +118,9 @@ jobs:
           sed -i 's/[\d128-\d255]//g' *_summary.txt
       - uses: actions/upload-artifact@v4.3.3
         if: always()
+        continue-on-error: true
         with:
-          name: results
+          name: results-${{ matrix.os }}
           path: |
              loki_summary.txt
              prom_summary.txt
