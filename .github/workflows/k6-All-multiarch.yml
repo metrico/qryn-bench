@@ -40,6 +40,7 @@ jobs:
       - uses: actions/setup-go@v5.0.1
         with:
           go-version: '1.20'
+          cache: false
       - name: Download k6 x86
         if: ${{ matrix.os != 'ARM64' }}
         run: |
@@ -65,7 +66,7 @@ jobs:
         uses: runforesight/workflow-telemetry-action@v2.0.0
         
       - name: Wait for Loki API
-        uses: mydea/action-wait-for-api@v1.0.0
+        uses: mydea/action-wait-for-api@main
         with:
           url: "http://localhost:3100/loki/api/v1/label"
           expected-response-field: "status"
@@ -79,7 +80,7 @@ jobs:
       - run: mv summary.txt loki_summary.txt
         if: always()
       - name: Wait for Prom API
-        uses: mydea/action-wait-for-api@v1.0.0
+        uses: mydea/action-wait-for-api@main
         with:
           url: "http://localhost:3100/api/v1/query"
           expected-response-field: "status"
@@ -99,7 +100,7 @@ jobs:
       - run: mv summary.txt prom_summary.txt
         if: always()
       - name: Wait for Tempo API
-        uses: mydea/action-wait-for-api@v1.0.0
+        uses: mydea/action-wait-for-api@main
         with:
           url: "http://localhost:3100/api/search/tags"
       - name: Run k6 tempo test
