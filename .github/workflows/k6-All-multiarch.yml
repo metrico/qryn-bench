@@ -13,7 +13,7 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-latest, ARM64]
+        os: [ubuntu-22.04, ubuntu-22.04-arm]
     name: Run k6 on ghcr.io/metrico/gigapipe:latest
     runs-on: ${{ matrix.os }}
     env:
@@ -40,7 +40,7 @@ jobs:
           path: .
       - uses: actions/setup-go@v5.0.1
         with:
-          go-version: '1.20'
+          go-version: '1.24'
           cache: false
       - name: Download k6 x86
         if: ${{ matrix.os != 'ARM64' }}
