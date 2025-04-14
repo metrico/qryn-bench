@@ -24,12 +24,19 @@ jobs:
         image: "clickhouse/clickhouse-server:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
         ports:
           - 9000:9000
+          - 8123:8123
+        env:
+          CLICKHOUSE_USER: qryn
+          CLICKHOUSE_PASSWORD: gigapipe
       qryn:
         image:  "ghcr.io/metrico/gigapipe:${{ github.event.inputs.qryn_tag || 'latest' }}"
         ports:
           - 3100:3100
         env:
           CLICKHOUSE_SERVER: clickhouse
+          CLICKHOUSE_PROTO: tcp
+          CLICKHOUSE_PORT: 9000
+          CLICKHOUSE_AUTH: qryn:gigapipe
           PORT: 3100
     
     steps:
