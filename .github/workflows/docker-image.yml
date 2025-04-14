@@ -33,7 +33,7 @@ jobs:
           image: ghcr.io/metrico/k6:latest
           path: /usr/bin/k6
     - name: Upload Custom k6
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4.6.2
       with:
           path: ${{ steps.extract.outputs.destination }}/k6
           name: latest
