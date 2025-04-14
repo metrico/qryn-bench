@@ -1,9 +1,9 @@
-name: K6 All-In-One (MULTI-ARCH)
+name: Gigapipe K6 All-In-One (MULTI-ARCH)
 on:
   workflow_dispatch:
     inputs:
       qryn_tag:
-        description: 'Build/Tag for qryn (latest)'
+        description: 'Build/Tag for gigapipe (latest)'
         required: false
       clickhouse_tag:
         description: 'BuildTag for ClickHouse (latest)'
@@ -14,22 +14,23 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, ARM64]
-    name: Run k6 on qryn:latest
+    name: Run k6 on ghcr.io/metrico/gigapipe:latest
     runs-on: ${{ matrix.os }}
     env:
-      QRYN_VERSION: "clickhouse/clickhouse-server:${{ github.event.inputs.qryn_tag || 'latest' }}"
-      CLICKHOUSE_VERSION: "qxip/qryn:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
+      CLICKHOUSE_VERSION: "clickhouse/clickhouse-server:${{ github.event.inputs.qryn_tag || 'latest' }}"
+      QRYN_VERSION: "ghcr.io/metrico/gigapipe:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
     services:
       clickhouse:
         image: "clickhouse/clickhouse-server:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
         ports:
-          - 8123:8123
+          - 9000:9000
       qryn:
-        image:  "qxip/qryn:${{ github.event.inputs.qryn_tag || 'latest' }}"
+        image:  "ghcr.io/metrico/gigapipe:${{ github.event.inputs.qryn_tag || 'latest' }}"
         ports:
           - 3100:3100
         env:
           CLICKHOUSE_SERVER: clickhouse
+          PORT: 3100
     
     steps:
       - name: Checkout
