@@ -88,6 +88,7 @@ jobs:
       - run: mv summary.txt loki_summary.txt
         if: always()
       - name: Wait for Prom API
+        if: false
         uses: mydea/action-wait-for-api@main
         with:
           url: "http://localhost:3100/api/v1/query"
