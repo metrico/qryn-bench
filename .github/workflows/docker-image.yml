@@ -44,3 +44,4 @@ jobs:
         file: ${{ steps.extract.outputs.destination }}/k6
         asset_name: k6
         tag: latest
+        overwrite: true
