@@ -1,9 +1,9 @@
-name: K6 All-In-One (x86)
+name: Gigapipe K6 All-In-One (x86)
 on:
   workflow_dispatch:
     inputs:
       qryn_tag:
-        description: 'Build/Tag for qryn (latest)'
+        description: 'Build/Tag for Gigapipe (latest)'
         required: false
       clickhouse_tag:
         description: 'BuildTag for ClickHouse (latest)'
@@ -15,18 +15,20 @@ jobs:
     runs-on: ubuntu-latest
     env:
       QRYN_VERSION: "clickhouse/clickhouse-server:${{ github.event.inputs.qryn_tag || 'latest' }}"
-      CLICKHOUSE_VERSION: "qxip/qryn:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
+      CLICKHOUSE_VERSION: "ghcr.io/metrico/gigapipe:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
     services:
       clickhouse:
         image: "clickhouse/clickhouse-server:${{ github.event.inputs.clickhouse_tag || 'latest' }}"
         ports:
           - 8123:8123
+          - 9000:9000
       qryn:
-        image:  "qxip/qryn:${{ github.event.inputs.qryn_tag || 'latest' }}"
+        image:  "ghcr.io/metrico/gigapipe:${{ github.event.inputs.qryn_tag || 'latest' }}"
         ports:
           - 3100:3100
         env:
           CLICKHOUSE_SERVER: clickhouse
+          PORT: 3100
     
     steps:
       - name: Checkout
@@ -113,9 +115,9 @@ jobs:
         if: always()
         run: |
           echo "### qryn image" >> $GITHUB_STEP_SUMMARY
-          echo "qxip/qryn:${{ github.event.inputs.qryn_tag || 'latest' }}" >> $GITHUB_STEP_SUMMARY
+          echo "ghcr.io/metrico/gigapipe:${{ github.event.inputs.qryn_tag || 'latest' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### cowsdb image" >> $GITHUB_STEP_SUMMARY
+          echo "### clickhouse image" >> $GITHUB_STEP_SUMMARY
           echo "${{ github.event.inputs.clickhouse_image || 'clickhouse/clickhouse-server' }}:${{ github.event.inputs.clickhouse_tag || 'latest' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Loki Test" >> $GITHUB_STEP_SUMMARY
