@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       qryn_tag:
-        description: 'Build/Tag for gigapipe (latest)'
+        description: 'Build/Tag for Gigapipe (latest)'
         required: false
       clickhouse_tag:
         description: 'BuildTag for ClickHouse (latest)'
@@ -87,14 +87,7 @@ jobs:
           K6_ITERACTIONS: 150
       - run: mv summary.txt loki_summary.txt
         if: always()
-      - name: Wait for Prom API
-        if: false
-        uses: mydea/action-wait-for-api@main
-        with:
-          url: "http://localhost:3100/api/v1/query"
-          expected-response-field: "status"
-          expected-response-field-value: "success"
-          timeout: 30
+  
       - name: Run k6 prometheus test
         run: ./k6 run --out csv=results.csv prometheus/qryn-loadtest.js 
         env:
@@ -108,10 +101,7 @@ jobs:
           RAMP_UP_MIN: 1
       - run: mv summary.txt prom_summary.txt
         if: always()
-      - name: Wait for Tempo API
-        uses: mydea/action-wait-for-api@main
-        with:
-          url: "http://localhost:3100/api/search/tags"
+  
       - name: Run k6 tempo test
         run: ./k6-tracing run --out csv=results.csv tempo/qryn-tempo-template.js
         env:
@@ -138,10 +128,10 @@ jobs:
       - name: Summary Report
         if: always()
         run: |
-          echo "### qryn image" >> $GITHUB_STEP_SUMMARY
-          echo "qxip/qryn:${{ github.event.inputs.qryn_tag || 'latest' }}" >> $GITHUB_STEP_SUMMARY
+          echo "### gigapipe image" >> $GITHUB_STEP_SUMMARY
+          echo "ghcr.io/metrico/gigapipe:${{ github.event.inputs.qryn_tag || 'latest' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### cowsdb image" >> $GITHUB_STEP_SUMMARY
+          echo "### clickhouse image" >> $GITHUB_STEP_SUMMARY
           echo "${{ github.event.inputs.clickhouse_image || 'clickhouse/clickhouse-server' }}:${{ github.event.inputs.clickhouse_tag || 'latest' }}" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "### Loki Test" >> $GITHUB_STEP_SUMMARY
