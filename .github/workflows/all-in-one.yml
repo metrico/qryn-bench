@@ -22,13 +22,19 @@ jobs:
         ports:
           - 8123:8123
           - 9000:9000
+        env:
+          CLICKHOUSE_USER: gigapipe
+          CLICKHOUSE_PASSWORD: demo
       qryn:
         image:  "ghcr.io/metrico/gigapipe:${{ github.event.inputs.qryn_tag || 'latest' }}"
         ports:
           - 3100:3100
         env:
-          CLICKHOUSE_SERVER: clickhouse
           PORT: 3100
+          CLICKHOUSE_SERVER: clickhouse
+          CLICKHOUSE_PORT: 9000
+          CLICKHOUSE_AUTH: 'gigapipe:demo'
+          CLICKHOUSE_DB: qryn
     
     steps:
       - name: Checkout
